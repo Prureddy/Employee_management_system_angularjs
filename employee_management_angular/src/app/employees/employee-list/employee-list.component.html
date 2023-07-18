@@ -1,0 +1,65 @@
+<div class="card">
+
+   <!-- Modal -->
+   <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <h4 class="modal-title">Employee Details</h4>
+            </div>
+            <div class="modal-body">
+               <div *ngFor="let emp of detailedEmployee | keyvalue: keepOriginalOrder">
+                  <b>{{ emp.key.charAt(0).toUpperCase() + emp.key.slice(1) }}:</b>
+                  {{ emp.value }}
+                  <br>
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <div class="card-header">
+      Employee List
+   </div>
+
+   <div class="card-body">
+      <loader *ngIf="!employees"></loader>
+
+      <div class="table-responsive">
+         <table class="table" *ngIf="employees?.length!==0">
+            <thead>
+               <tr>
+                  <th>FirstName</th>
+                  <th>LastName</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let employee of employees">
+                  <td>{{ employee.firstName }}</td>
+                  <td>{{ employee.lastName }}</td>
+                  <td>{{ employee.email }}</td>
+                  <td>
+                     <button class="btn btn-danger" (click)="delete(employee.id)">
+                        Delete</button>
+                     <button [routerLink]="['/employees/update', employee.id]" class="btn btn-primary">
+                        Update</button>
+                     <button (click)="getDetails(employee.id)" class="btn btn-primary" data-toggle="modal"
+                        data-target="#myModal">
+                        Details
+                     </button>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+
+</div>
